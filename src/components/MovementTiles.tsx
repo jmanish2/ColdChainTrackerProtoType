@@ -4,6 +4,8 @@ import ReceivingDockIntake from './ReceivingDockIntake';
 import PullProduct from './PullProduct';
 import ReportForProduction from './ReportForProduction';
 import FinishedGoodsStorage from './FinishedGoodsStorage';
+import LineAccountability from './LineAccountability';
+
 
 // Define primary colors to reference in style props when needed
 const COLORS = {
@@ -81,8 +83,8 @@ const MovementTiles: React.FC<MovementTilesProps> = ({ resetTrigger }) => {
                 return <ReportForProduction onBack={handleBack} />;
             case 'finished-goods':
                 return <FinishedGoodsStorage onBack={handleBack} />;
-            // case 'line-accountability':
-            //     return <LineAccountability onBack={handleBack} />;
+            case 'line-accountability':
+                return <LineAccountability onBack={handleBack} />;
             default:
                 return (
                     <div className="text-center p-8">
