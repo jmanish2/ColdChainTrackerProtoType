@@ -23,6 +23,11 @@ const ReceivingDockIntake: React.FC<ReceivingDockIntakeProps> = ({ onBack }) => 
     const [labelsPerPallet, setLabelsPerPallet] = useState('1');
     const [destinationLocation, setDestinationLocation] = useState('');
 
+    const handleScanProduct = () => {
+        setProductValue('MAT-VAC-001');
+        setProductDescription('Temperature Sensitive Vaccine - Storage Req: 2-8°C');
+    };
+
     const handleMoveProduct = () => {
         // Reset all form fields to initial state
         setProductValue('');
@@ -88,6 +93,7 @@ const ReceivingDockIntake: React.FC<ReceivingDockIntakeProps> = ({ onBack }) => 
                 <button
                     style={{ backgroundColor: COLORS.primaryRed }}
                     className="text-white rounded-full py-2 px-3 text-sm whitespace-nowrap"
+                    onClick={handleScanProduct}
                 >
                     Scan Product
                 </button>
@@ -236,7 +242,7 @@ const ReceivingDockIntake: React.FC<ReceivingDockIntakeProps> = ({ onBack }) => 
                 </button>
                 <button
                     style={{ backgroundColor: labelPrinted ? COLORS.primaryBlue : '#9ca3af' }}
-                    className="text-white rounded-full py-2 px-4 text-sm font-semibold cursor-not-allowed"
+                    className={`text-white rounded-full py-2 px-4 text-sm font-semibold ${!labelPrinted ? 'cursor-not-allowed' : ''}`}
                     disabled={!labelPrinted}
                     onClick={handleMoveProduct}
                 >
