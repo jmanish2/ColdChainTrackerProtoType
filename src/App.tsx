@@ -3,6 +3,7 @@ import Layout from './components/Layout';
 import Home from './components/Home';
 import MovementTiles from './components/MovementTiles';
 import Movements from './components/Movements';
+import TORExtension from './components/TORExtension';
 import './App.css';
 
 function App() {
@@ -27,13 +28,15 @@ function App() {
                 return <Movements />;
             case 'reports':
                 return <Movements />;
+            case 'tor-extension':
+                return <TORExtension onBack={() => setCurrentPage('home')} />;
             default:
                 return <Home />;
         }
     };
 
     return (
-        <Layout currentPage={currentPage} onNavigate={handleNavigate}>
+        <Layout currentPage={currentPage} onNavigate={handleNavigate} movementResetTrigger={movementResetTrigger}>
             {renderCurrentPage()}
         </Layout>
     );

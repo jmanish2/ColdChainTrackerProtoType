@@ -1,5 +1,5 @@
-import React from 'react';
-import { Clock, Package, Home, BarChart2, Settings, ClipboardCheck, User, LogOut, AlertTriangle } from 'lucide-react';
+import React, { useState } from 'react';
+import { Clock, Package, Home, BarChart2, Settings, ClipboardCheck, User, LogOut, AlertTriangle, ClockArrowUp, Radar } from 'lucide-react';
 
 // Define primary colors to reference in style props when needed
 const COLORS = {
@@ -11,9 +11,14 @@ interface LayoutProps {
     children: React.ReactNode;
     currentPage: string;
     onNavigate: (page: string) => void;
+    movementResetTrigger?: number; // Add this prop
 }
 
-const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) => {
+const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate, movementResetTrigger }) => {
+    const handleMoveProductClick = () => {
+        onNavigate('movement-tiles');
+    };
+
     return (
         <div className="flex flex-col h-screen bg-gray-50">
             {/* Header - PCI Pharma Branding */}
@@ -67,7 +72,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
 
                     <div
                         className={`flex flex-col items-center cursor-pointer ${currentPage === 'movement-tiles' || currentPage === 'movements' ? 'text-red-600' : 'text-gray-600'}`}
-                        onClick={() => onNavigate('movement-tiles')}
+                        onClick={handleMoveProductClick}
                         style={(currentPage === 'movement-tiles' || currentPage === 'movements') ? { color: COLORS.primaryRed } : {}}
                     >
                         <Package size={20} />
@@ -75,13 +80,17 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
                     </div>
 
                     <div className="flex flex-col items-center text-gray-600 cursor-pointer">
-                        <Clock size={20} />
+                        <Radar size={20} />
                         <span className="text-xs">Active Products</span>
                     </div>
 
-                    <div className="flex flex-col items-center text-gray-600 cursor-pointer">
-                        <ClipboardCheck size={20} />
-                        <span className="text-xs">Quality</span>
+                    <div
+                        className={`flex flex-col items-center cursor-pointer ${currentPage === 'tor-extension' ? 'text-red-600' : 'text-gray-600'}`}
+                        onClick={() => onNavigate('tor-extension')} // Add this click handler
+                        style={currentPage === 'tor-extension' ? { color: COLORS.primaryRed } : {}}
+                    >
+                        <ClockArrowUp size={20} />
+                        <span className="text-xs">TOR Extension</span>
                     </div>
 
                     <div
