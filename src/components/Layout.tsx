@@ -19,6 +19,10 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate, move
         onNavigate('movement-tiles');
     };
 
+    const handleActiveProductsClick = () => {
+        onNavigate('active-products');
+    };
+
     return (
         <div className="flex flex-col h-screen bg-gray-50">
             {/* Header - PCI Pharma Branding */}
@@ -34,9 +38,9 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate, move
 
                     <div className="flex items-center bg-white/10 px-4 py-2 rounded-md">
                         <div className="flex items-center gap-2">
-                            <div className="w-6 h-6 rounded-full bg-red-500 flex items-center justify-center text-white font-bold">0</div>
-                            <div className="w-6 h-6 rounded-full bg-yellow-500 flex items-center justify-center text-white font-bold">1</div>
-                            <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white font-bold">2</div>
+                            <div className="w-6 h-6 rounded-full bg-red-500 flex items-center justify-center text-white font-bold">2</div>
+                            <div className="w-6 h-6 rounded-full bg-yellow-500 flex items-center justify-center text-white font-bold">2</div>
+                            <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white font-bold">4</div>
                         </div>
                     </div>
 
@@ -79,7 +83,11 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate, move
                         <span className="text-xs">Move Product</span>
                     </div>
 
-                    <div className="flex flex-col items-center text-gray-600 cursor-pointer">
+                    <div
+                        className={`flex flex-col items-center cursor-pointer ${currentPage === 'active-products' ? 'text-red-600' : 'text-gray-600'}`}
+                        onClick={handleActiveProductsClick}
+                        style={currentPage === 'active-products' ? { color: COLORS.primaryRed } : {}}
+                    >
                         <Radar size={20} />
                         <span className="text-xs">Active Products</span>
                     </div>
@@ -102,7 +110,11 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate, move
                         <span className="text-xs">Reports</span>
                     </div>
 
-                    <div className="flex flex-col items-center text-gray-600 cursor-pointer">
+                    <div
+                        className={`flex flex-col items-center cursor-pointer ${currentPage === 'settings' ? 'text-red-600' : 'text-gray-600'}`}
+                        onClick={() => onNavigate('settings')}
+                        style={currentPage === 'settings' ? { color: COLORS.primaryRed } : {}}
+                    >
                         <Settings size={20} />
                         <span className="text-xs">Settings</span>
                     </div>

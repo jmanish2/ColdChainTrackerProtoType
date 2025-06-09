@@ -1,7 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AlertTriangle } from 'lucide-react';
+import ActiveProducts from './ActiveProducts';
 
 const Home = () => {
+    const [showActiveProducts, setShowActiveProducts] = useState(false);
+
+    const handleViewActiveProducts = () => {
+        setShowActiveProducts(true);
+    };
+
+    const handleBackFromActiveProducts = () => {
+        setShowActiveProducts(false);
+    };
+
+    // If ActiveProducts is shown, render it instead of the dashboard
+    if (showActiveProducts) {
+        return <ActiveProducts onBack={handleBackFromActiveProducts} />;
+    }
+
     return (
         <>
             {/* Title */}
@@ -19,7 +35,12 @@ const Home = () => {
                     <h3 className="font-bold text-yellow-800">WARNING: Approaching Exposure Limit</h3>
                     <p className="text-yellow-800 italic font-semibold animate-pulse">Case #C002 has 30 minutes remaining before exposure time limit.</p>
                 </div>
-                <button className="px-3 py-1 bg-yellow-800 text-white rounded-full text-sm">View Details</button>
+                <button
+                    className="px-3 py-1 bg-yellow-800 text-white rounded-full text-sm"
+                    onClick={handleViewActiveProducts}
+                >
+                    View Details
+                </button>
             </div>
         </>
     );

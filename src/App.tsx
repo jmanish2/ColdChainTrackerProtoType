@@ -4,6 +4,7 @@ import Home from './components/Home';
 import MovementTiles from './components/MovementTiles';
 import Movements from './components/Movements';
 import TORExtension from './components/TORExtension';
+import ActiveProducts from './components/ActiveProducts';
 import './App.css';
 
 function App() {
@@ -27,9 +28,23 @@ function App() {
             case 'movements':
                 return <Movements />;
             case 'reports':
-                return <Movements />;
+                return (
+                    <div className="flex flex-col items-center justify-center h-64">
+                        <h1 className="text-xl font-bold text-gray-800 mb-2">Reports</h1>
+                        <p className="text-gray-600">Not implemented yet</p>
+                    </div>
+                );
+            case 'settings':
+                return (
+                    <div className="flex flex-col items-center justify-center h-64">
+                        <h1 className="text-xl font-bold text-gray-800 mb-2">Settings</h1>
+                        <p className="text-gray-600">Not implemented yet</p>
+                    </div>
+                );
             case 'tor-extension':
                 return <TORExtension onBack={() => setCurrentPage('home')} />;
+            case 'active-products':
+                return <ActiveProducts onBack={() => setCurrentPage('home')} />;
             default:
                 return <Home />;
         }
