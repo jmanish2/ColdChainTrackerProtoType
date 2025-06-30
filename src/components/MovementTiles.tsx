@@ -31,7 +31,7 @@ const movementOptions = [
     },
     {
         id: 'production-consumption',
-        name: 'Report for Production',
+        name: 'Product Introduction',
         description: 'Report consumption of cold chain materials for finished goods manufacturing',
         icon: Route,
         color: COLORS.primaryBlue

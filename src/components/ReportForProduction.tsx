@@ -72,8 +72,8 @@ const ReportForProduction: React.FC<ReportForProductionProps> = ({ onBack }) => 
                         <Route size={18} className="text-white" />
                     </div>
                     <div>
-                        <h1 className="text-xl font-bold text-gray-800">Report for Production</h1>
-                        <p className="text-sm text-gray-600">Report consumption of cold chain materials for finished goods manufacturing</p>
+                        <h1 className="text-xl font-bold text-gray-800">Product Introduction</h1>
+                        <p className="text-sm text-gray-600">Product introduction of cold chain materials for finished goods manufacturing</p>
                     </div>
                 </div>
             </div>
@@ -202,10 +202,10 @@ const ReportForProduction: React.FC<ReportForProductionProps> = ({ onBack }) => 
             {/* Action Button */}
             <div className="flex items-center justify-end gap-3 mt-6">
                 <button
-                    style={{ 
-                        backgroundColor: (currentLocation && destinationLocation && palletNumber) 
-                            ? COLORS.primaryBlue 
-                            : '#9ca3af' 
+                    style={{
+                        backgroundColor: (currentLocation && destinationLocation && palletNumber)
+                            ? COLORS.primaryBlue
+                            : '#9ca3af'
                     }}
                     className="text-white rounded-full py-2 px-4 text-sm font-semibold"
                     disabled={!currentLocation || !destinationLocation || !palletNumber}
