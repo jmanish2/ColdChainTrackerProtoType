@@ -15,6 +15,7 @@ const ReceivingDockIntake: React.FC<ReceivingDockIntakeProps> = ({ onBack }) => 
     const [productDescription, setProductDescription] = useState('');
     const [labelPrinted, setLabelPrinted] = useState(false);
     const [productValue, setProductValue] = useState('');
+    const [pciLotNumber, setPciLotNumber] = useState('');
     const [vendorItemNumber, setVendorItemNumber] = useState('');
     const [vendorLotNumber, setVendorLotNumber] = useState('');
     const [palletCount, setPalletCount] = useState('');
@@ -32,6 +33,7 @@ const ReceivingDockIntake: React.FC<ReceivingDockIntakeProps> = ({ onBack }) => 
         // Reset all form fields to initial state
         setProductValue('');
         setProductDescription('');
+        setPciLotNumber('');
         setVendorItemNumber('');
         setVendorLotNumber('');
         setPalletCount('');
@@ -40,6 +42,15 @@ const ReceivingDockIntake: React.FC<ReceivingDockIntakeProps> = ({ onBack }) => 
         setLabelsPerPallet('1');
         setDestinationLocation('');
         setLabelPrinted(false);
+    };
+
+    const isFormValid = () => {
+        return productValue &&
+            pciLotNumber &&
+            palletCount &&
+            qtyPerPallet &&
+            destinationLocation &&
+            labelPrinted;
     };
 
     return (
@@ -65,7 +76,7 @@ const ReceivingDockIntake: React.FC<ReceivingDockIntakeProps> = ({ onBack }) => 
                 </div>
             </div>
 
-            {/* Warning Banner - Same as other pages */}
+            {/* Warning Banner */}
             <div className="bg-yellow-50 border-2 border-yellow-500 rounded p-3 mb-3 flex items-center">
                 <div className="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center text-white mr-3">
                     <AlertTriangle size={18} />
@@ -77,9 +88,9 @@ const ReceivingDockIntake: React.FC<ReceivingDockIntakeProps> = ({ onBack }) => 
                 <button className="px-3 py-1 bg-yellow-800 text-white rounded-full text-sm">View Details</button>
             </div>
 
-            {/* Product Entry with Scan Button */}
+            {/* Product Entry with Scan Button and PCI Lot# */}
             <div className="flex items-center mb-2">
-                <label className="text-sm text-gray-700 w-40 flex-shrink-0">Product*:</label>
+                <label className="text-sm text-gray-700 w-20 flex-shrink-0">Product*:</label>
                 <input
                     type="text"
                     className="flex-1 text-sm rounded border border-gray-300 p-2 mr-2"
@@ -92,16 +103,24 @@ const ReceivingDockIntake: React.FC<ReceivingDockIntakeProps> = ({ onBack }) => 
                 />
                 <button
                     style={{ backgroundColor: COLORS.primaryRed }}
-                    className="text-white rounded-full py-2 px-3 text-sm whitespace-nowrap"
+                    className="text-white rounded-full py-2 px-3 text-sm whitespace-nowrap mr-4"
                     onClick={handleScanProduct}
                 >
                     Scan Product
                 </button>
+                <label className="text-sm text-gray-700 w-20 flex-shrink-0">PCI Lot#*:</label>
+                <input
+                    type="text"
+                    className="flex-1 text-sm rounded border border-gray-300 p-2"
+                    placeholder="Enter PCI lot number"
+                    value={pciLotNumber}
+                    onChange={(e) => setPciLotNumber(e.target.value)}
+                />
             </div>
 
             {/* Product Description */}
             <div className="flex items-center mb-2">
-                <label className="text-sm text-gray-700 w-40 flex-shrink-0">Description:</label>
+                <label className="text-sm text-gray-700 w-20 flex-shrink-0">Description:</label>
                 <input
                     type="text"
                     className="flex-1 text-sm rounded border border-gray-200 bg-gray-100 p-2"
@@ -110,21 +129,17 @@ const ReceivingDockIntake: React.FC<ReceivingDockIntakeProps> = ({ onBack }) => 
                 />
             </div>
 
-            {/* Vendor Item */}
+            {/* Vendor Item and Vendor Lot */}
             <div className="flex items-center mb-2">
-                <label className="text-sm text-gray-700 w-40 flex-shrink-0">Vendor Item:</label>
+                <label className="text-sm text-gray-700 w-20 flex-shrink-0">Vendor Item:</label>
                 <input
                     type="text"
-                    className="flex-1 text-sm rounded border border-gray-300 p-2"
+                    className="flex-1 text-sm rounded border border-gray-300 p-2 mr-4"
                     placeholder="Enter vendor item number"
                     value={vendorItemNumber}
                     onChange={(e) => setVendorItemNumber(e.target.value)}
                 />
-            </div>
-
-            {/* Vendor Lot */}
-            <div className="flex items-center mb-4">
-                <label className="text-sm text-gray-700 w-40 flex-shrink-0">Vendor Lot:</label>
+                <label className="text-sm text-gray-700 w-20 flex-shrink-0">Vendor Lot:</label>
                 <input
                     type="text"
                     className="flex-1 text-sm rounded border border-gray-300 p-2"
@@ -134,19 +149,15 @@ const ReceivingDockIntake: React.FC<ReceivingDockIntakeProps> = ({ onBack }) => 
                 />
             </div>
 
-            {/* Type (Disabled) */}
+            {/* Type and Number of Pallets */}
             <div className="flex items-center mb-2">
-                <label className="text-sm text-gray-700 w-40 flex-shrink-0">Type*:</label>
-                <select className="flex-1 text-sm rounded border border-gray-300 p-2 bg-gray-100" disabled>
+                <label className="text-sm text-gray-700 w-20 flex-shrink-0">Type*:</label>
+                <select className="flex-1 text-sm rounded border border-gray-300 p-2 bg-gray-100 mr-4" disabled>
                     <option>Pallet</option>
                     <option>Case</option>
                     <option>Tray</option>
                 </select>
-            </div>
-
-            {/* Number of Pallets */}
-            <div className="flex items-center mb-2">
-                <label className="text-sm text-gray-700 w-40 flex-shrink-0">No. of Pallets*:</label>
+                <label className="text-sm text-gray-700 w-20 flex-shrink-0">No. of Pallets*:</label>
                 <input
                     type="number"
                     className="flex-1 text-sm rounded border border-gray-300 p-2"
@@ -157,22 +168,18 @@ const ReceivingDockIntake: React.FC<ReceivingDockIntakeProps> = ({ onBack }) => 
                 />
             </div>
 
-            {/* Quantity per Pallet */}
+            {/* Quantity per Pallet and Unit of Measure */}
             <div className="flex items-center mb-2">
-                <label className="text-sm text-gray-700 w-40 flex-shrink-0">Qty per Pallet*:</label>
+                <label className="text-sm text-gray-700 w-20 flex-shrink-0">Qty per Pallet*:</label>
                 <input
                     type="number"
-                    className="flex-1 text-sm rounded border border-gray-300 p-2"
+                    className="flex-1 text-sm rounded border border-gray-300 p-2 mr-4"
                     placeholder="Enter quantity per pallet"
                     min="1"
                     value={qtyPerPallet}
                     onChange={(e) => setQtyPerPallet(e.target.value)}
                 />
-            </div>
-
-            {/* Unit of Measure */}
-            <div className="flex items-center mb-2">
-                <label className="text-sm text-gray-700 w-40 flex-shrink-0">Unit of Measure:</label>
+                <label className="text-sm text-gray-700 w-20 flex-shrink-0">Unit of Measure:</label>
                 <input
                     type="text"
                     className="flex-1 text-sm rounded border border-gray-300 p-2"
@@ -182,32 +189,34 @@ const ReceivingDockIntake: React.FC<ReceivingDockIntakeProps> = ({ onBack }) => 
                 />
             </div>
 
-            {/* Labels per Pallet */}
-            <div className="flex items-center mb-4">
-                <label className="text-sm text-gray-700 w-40 flex-shrink-0">Labels per Pallet:</label>
+            {/* Labels per Pallet and Printer */}
+            <div className="flex items-center mb-2">
+                <label className="text-sm text-gray-700 w-20 flex-shrink-0">Labels per Pallet:</label>
                 <input
                     type="number"
-                    className="flex-1 text-sm rounded border border-gray-300 p-2"
+                    className="flex-1 text-sm rounded border border-gray-300 p-2 mr-4"
                     min="1"
                     value={labelsPerPallet}
                     onChange={(e) => setLabelsPerPallet(e.target.value)}
                 />
+                <label className="text-sm text-gray-700 w-20 flex-shrink-0">Printer:</label>
+                <select className="flex-1 text-sm rounded border border-gray-300 p-2">
+                    <option>Printer 1</option>
+                    <option>Printer 2</option>
+                    <option>Printer 3</option>
+                </select>
             </div>
 
-            {/* Destination Location Type */}
-            <div className="flex items-center mb-2">
-                <label className="text-sm text-gray-700 w-40 flex-shrink-0">Destination Type*:</label>
-                <select className="flex-1 text-sm rounded border border-gray-300 p-2 bg-gray-100" disabled>
+            {/* Destination Location Type and Destination Location */}
+            <div className="flex items-center mb-4">
+                <label className="text-sm text-gray-700 w-20 flex-shrink-0">Destination Type*:</label>
+                <select className="flex-1 text-sm rounded border border-gray-300 p-2 bg-gray-100 mr-4" disabled>
                     <option>Cold Storage</option>
                     <option>Production Prep</option>
                     <option>Production Line</option>
                     <option>Finished Goods</option>
                 </select>
-            </div>
-
-            {/* Destination Location */}
-            <div className="flex items-center mb-4">
-                <label className="text-sm text-gray-700 w-40 flex-shrink-0">Destination Location*:</label>
+                <label className="text-sm text-gray-700 w-20 flex-shrink-0">Destination Location*:</label>
                 <select
                     className="flex-1 text-sm rounded border border-gray-300 p-2"
                     value={destinationLocation}
@@ -221,16 +230,6 @@ const ReceivingDockIntake: React.FC<ReceivingDockIntakeProps> = ({ onBack }) => 
                 </select>
             </div>
 
-            {/* Printer Selection */}
-            <div className="flex items-center mb-4">
-                <label className="text-sm text-gray-700 w-40 flex-shrink-0">Printer:</label>
-                <select className="flex-1 text-sm rounded border border-gray-300 p-2">
-                    <option>Printer 1</option>
-                    <option>Printer 2</option>
-                    <option>Printer 3</option>
-                </select>
-            </div>
-
             {/* Action Buttons */}
             <div className="flex items-center justify-end gap-3 mt-6">
                 <button
@@ -241,18 +240,18 @@ const ReceivingDockIntake: React.FC<ReceivingDockIntakeProps> = ({ onBack }) => 
                     Print Label
                 </button>
                 <button
-                    style={{ backgroundColor: labelPrinted ? COLORS.primaryBlue : '#9ca3af' }}
-                    className={`text-white rounded-full py-2 px-4 text-sm font-semibold ${!labelPrinted ? 'cursor-not-allowed' : ''}`}
-                    disabled={!labelPrinted}
+                    style={{ backgroundColor: isFormValid() ? COLORS.primaryBlue : '#9ca3af' }}
+                    className={`text-white rounded-full py-2 px-4 text-sm font-semibold ${!isFormValid() ? 'cursor-not-allowed' : ''}`}
+                    disabled={!isFormValid()}
                     onClick={handleMoveProduct}
                 >
                     Move Product
                 </button>
             </div>
 
-            {!labelPrinted && (
+            {!isFormValid() && (
                 <p className="text-xs text-gray-500 text-right mt-2">
-                    * Print label first to enable Move Product
+                    * Complete all required fields and print label to enable Move Product
                 </p>
             )}
         </>
